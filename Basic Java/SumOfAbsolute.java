@@ -1,4 +1,4 @@
-public class SumOfAbsolute {
+public class SumOfAbsolute{
     public static void main(String[] args) {
         int sum = 0;
         int numOfArgs = args.length;
