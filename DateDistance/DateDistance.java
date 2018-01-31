@@ -1,15 +1,20 @@
 public class DateDistance {
-public static boolean isLeapYear (long year){
-        if(year % 4 == 0) {
-                return true;
+public static boolean isLeapYear (long year) {
+        if (year % 4 == 0) {
+                if (year % 100 == 0) {
+                        if (year % 400 == 0) {
+                                return true;
+                        }
+                        else {
+                                return false;
+                        }
+
+                }
+                else {
+                        return true;
+                }
         }
-        else if(year % 100 == 0) {
-                return true;
-        }
-        else if(year % 400 == 0) {
-                return true;
-        }
-        else{
+        else {
                 return false;
         }
 }
@@ -17,17 +22,17 @@ public static boolean isLeapYear (long year){
 public static long daysInMonth (long year, long month) {
         switch ((int)month) {
         case 1:  return 31;
-        case 2:  if (isLeapYear(year)) {
+        case 2:  if (isLeapYear((int)year)) {
                         return 29;
         }
                 else{
                         return 28;
                 }
-        case 3:  return 30;
-        case 4:  return 31;
-        case 5:  return 30;
-        case 6:  return 31;
-        case 7:  return 30;
+        case 3:  return 31;
+        case 4:  return 30;
+        case 5:  return 31;
+        case 6:  return 30;
+        case 7:  return 31;
         case 8:  return 31;
         case 9:  return 30;
         case 10: return 31;
@@ -38,75 +43,53 @@ public static long daysInMonth (long year, long month) {
 }
 
 public static boolean isValidDate (long month, long day, long year ) {
-        if ( day <= daysInMonth(month, year) && day > 0 && month > 0 && year > 0 && month <= 12) {
-                return true;
+        boolean isValidYear = false;
+        boolean isValidMonth = false;
+        boolean isValidDay = false;
+        if (year > 0) {
+                isValidYear = true;
         }
-        else{
-                return false;
+        if (month > 0 && month <= 12) {
+                isValidMonth = true;
         }
+        if (day > 0 && day <= daysInMonth(year, month)) {
+                isValidDay = true;
+        }
+        if (month == 2) {
+                if (isLeapYear(year) && day <= 29) {
+                        isValidDay = true;
+                }
+        }
+        return isValidYear && isValidMonth && isValidDay;
 }
 
-public static boolean isBigger(long month0, long day0, long year0, long month1, long day1, long year1){
-        if (year0 > year1) {
-                return false;
-        }
-        else if (year0 == year1) {
-                if (month0 > month1) {
-                        return false;
-                }
-                else if (month0 == month1) {
-                        if (day0 > day1) {
-                                return false;
-                        }
-                        else {
-                                return true;
-                        }
-                }
-                else {
-                        return true;
-                }
-        }
-        else {
-                return true;
-        }
-}
 
 public static long daysBetween (long month0, long day0, long year0, long month1, long day1, long year1) {
+        if (year1 < year0 || year1 == year0) {
+                long tempVar = year1;
+                year1 = year0;
+                year0 = tempVar;
+                if (month1 < month0 || month1 == month0) {
+                        tempVar = month0;
+                        month0 = month1;
+                        month1 = tempVar;
+                        if (day1 < day0 || day1 == day0) {
+                                tempVar = day0;
+                                day0 = day1;
+                                day1 = tempVar;
+                        }
+                }
+        }
         long difference = 0;
-        long biggerDay = 0;
-        long biggerMonth = 0;
-        long biggerYear = 0;
-        long smallerDay = 0;
-        long smallerMonth = 0;
-        long smallerYear = 0;
-
-        if ((year0 > year1) || (year0 == year1)) {
-                biggerDay = day0;
-                biggerMonth = month0;
-                biggerYear = year0;
-                smallerDay = day1;
-                smallerMonth = month1;
-                smallerYear = year1;
-        }
-        else {
-                biggerDay = day1;
-                biggerMonth = month1;
-                biggerYear = year1;
-                smallerDay = day0;
-                smallerMonth = month0;
-                smallerYear = year0;
-        }
-
-        while ((smallerYear < biggerYear) || (smallerMonth < biggerMonth) || (smallerDay < biggerDay)) {
-                smallerDay++;
+        while(!((year0 == year1) && (month0 == month1) && (day0 == day1))) {
                 difference++;
-                while (smallerDay > daysInMonth(smallerMonth, smallerMonth)) {
-                        smallerDay = 1;
-                        smallerMonth++;
-                        while (smallerMonth > 13) {
-                                smallerYear++;
-                                smallerMonth = 1;
-                                smallerDay = 1;
+                day0++;
+                if(!isValidDate(month0, day0, year0)) {
+                        day0 = 1;
+                        month0++;
+                        if(!isValidDate(month0, day0, year0)) {
+                                month0 = 1;
+                                year0++;
                         }
                 }
         }
@@ -115,8 +98,19 @@ public static long daysBetween (long month0, long day0, long year0, long month1,
 
 
 public static String dayOfTheWeek (long month, long day, long year ) {
-        return "Tuesday";
+        long start = daysBetween(month, day, year, 1, 1, 2000) % 7;
+        switch((int)start) {
+        case 0: return "Sunday";
+        case 1: return "Monday";
+        case 2: return "Tuesday";
+        case 3: return "Wednesday";
+        case 4: return "Thursday";
+        case 5: return "Friday";
+        case 6: return "Saturday";
+        default: return "Invalid Date!";
+        }
 }
+
 
 public static String monthInYear (long month ) {
         switch((int)month) {
@@ -136,11 +130,11 @@ public static String monthInYear (long month ) {
         }
 }
 
-public static String longformDate ( long day, long month, long year ) {
+public static String longformDate (long day, long month, long year) {
         return dayOfTheWeek(day, month, year) + ", " + day + " " + monthInYear(month) + " " + year;
 }
 
-public static void main (String[] args ) {
+public static void main (String[] args) {
         try {
                 long day0 = Integer.parseInt(args[0]);
                 long month0 = Integer.parseInt(args[1]);
@@ -148,16 +142,14 @@ public static void main (String[] args ) {
                 long day1 = Integer.parseInt(args[3]);
                 long month1 = Integer.parseInt(args[4]);
                 long year1 = Integer.parseInt(args[5]);
-                if (isValidDate(day0, month0, year0) &&
-                    isValidDate(day1, month1, year1)) {
-                        System.out.println("There " + plural(daysBetween(day0, month0, year0, day1, month1, year1)) + "between " + longformDate(day0, month0, year0) + " and " + longformDate(day1, month1, year1) + "!");
+                if (isValidDate(day0, month0, year0) && isValidDate(day1, month1, year1)) {
+                        System.out.println("There " + daysBetween(day0, month0, year0, day1, month1, year1) + "between " + longformDate(day0, month0, year0) + " and " + longformDate(day1, month1, year1) + "!");
                 } else {
                         System.out.println("Invalid date entered!");
                 }
         }
         catch (Exception e) {
-                System.out.println("Usage instructions: java DateDistance "
-                                   + "<day0> <month0> <year0> <day1> <month1> <year1>");
+                System.out.println("Usage instructions: java DateDistance " + "<day0> <month0> <year0> <day1> <month1> <year1>");
         }
 }
 }
