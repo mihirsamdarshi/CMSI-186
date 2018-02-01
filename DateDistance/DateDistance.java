@@ -63,31 +63,51 @@ public static boolean isValidDate (long month, long day, long year ) {
         return isValidYear && isValidMonth && isValidDay;
 }
 
-
-public static long daysBetween (long month0, long day0, long year0, long month1, long day1, long year1) {
-        if (year1 < year0 || year1 == year0) {
-                long tempVar = year1;
-                year1 = year0;
-                year0 = tempVar;
-                if (month1 < month0 || month1 == month0) {
-                        tempVar = month0;
-                        month0 = month1;
-                        month1 = tempVar;
-                        if (day1 < day0 || day1 == day0) {
-                                tempVar = day0;
-                                day0 = day1;
-                                day1 = tempVar;
+public static boolean isYearOneBigger(long month0, long day0, long year0, long month1, long day1, long year1){
+        if (year0 > year1) {
+                return false;
+        }
+        else if (year0 == year1) {
+                if (month0 > month1) {
+                        return false;
+                }
+                else if (month0 == month1) {
+                        if (day0 > day1) {
+                                return false;
+                        }
+                        else {
+                                return true;
                         }
                 }
+                else {
+                        return true;
+                }
         }
-        long difference = 0;
+        else {
+                return true;
+        }
+}
+
+public static long daysBetween (long month0, long day0, long year0, long month1, long day1, long year1) {
+        if (!isYearOneBigger(month0, day0, year0, month1, day1, year1)) {
+                long tempMonth = month1;
+                long tempDay = day1;
+                long tempYear = year1;
+                month1 = month0;
+                day1 = day0;
+                year1 = year1;
+                month0 = tempMonth;
+                day0 = tempDay;
+                year0 = tempYear;
+        }
+        int difference = 0;
         while(!((year0 == year1) && (month0 == month1) && (day0 == day1))) {
                 difference++;
                 day0++;
-                if(!isValidDate(month0, day0, year0)) {
+                if(!isValidDate(year0, month0, day0)) {
                         day0 = 1;
                         month0++;
-                        if(!isValidDate(month0, day0, year0)) {
+                        if(!isValidDate(year0, month0, day0)) {
                                 month0 = 1;
                                 year0++;
                         }
@@ -95,6 +115,7 @@ public static long daysBetween (long month0, long day0, long year0, long month1,
         }
         return difference;
 }
+
 
 
 public static String dayOfTheWeek (long month, long day, long year ) {
