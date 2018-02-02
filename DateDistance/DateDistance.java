@@ -86,7 +86,6 @@ public static long daysBetween (long month0, long day0, long year0, long month1,
         long daysFromZeroMonthOne = 0;
         for (long i = 0; i < month0; i++) {
                 daysFromZeroMonthZero += daysInMonth(year0, i);
-                System.out.println(daysFromZeroMonthZero);
         }
         for (long i = 0; i < month1; i++) {
                 daysFromZeroMonthOne += daysInMonth(year1, i);
