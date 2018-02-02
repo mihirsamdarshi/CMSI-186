@@ -89,29 +89,39 @@ public static boolean isYearOneBigger(long month0, long day0, long year0, long m
 }
 
 public static long daysBetween (long month0, long day0, long year0, long month1, long day1, long year1) {
-        if (!isYearOneBigger(month0, day0, year0, month1, day1, year1)) {
-                long tempMonth = month1;
-                long tempDay = day1;
-                long tempYear = year1;
-                month1 = month0;
-                day1 = day0;
-                year1 = year1;
-                month0 = tempMonth;
-                day0 = tempDay;
-                year0 = tempYear;
-        }
-        int difference = 0;
-        while(!((year0 == year1) && (month0 == month1) && (day0 == day1))) {
-                difference++;
-                day0++;
-                if(!isValidDate(year0, month0, day0)) {
-                        day0 = 1;
-                        month0++;
-                        if(!isValidDate(year0, month0, day0)) {
-                                month0 = 1;
-                                year0++;
-                        }
+        long daysFromZeroYearZero = 0;
+        long daysFromZeroYearOne = 0;
+        for (long i = 0; i < year0; i++) {
+                if(isLeapYear(i)) {
+                        daysFromZeroYearZero += 366;
                 }
+                if(!isLeapYear(i)) {
+                        daysFromZeroYearZero += 365;
+                }
+        }
+        for (long i = 0; i < year1; i++) {
+                if(isLeapYear(i)) {
+                        daysFromZeroYearOne += 366;
+                }
+                if(!isLeapYear(i)) {
+                        daysFromZeroYearOne += 365;
+                }
+        }
+        long daysFromZeroMonthZero = 0;
+        long daysFromZeroMonthOne = 0;
+        for (long i = 0; i < month0; i++) {
+                daysFromZeroMonthZero += daysInMonth(i, year0);
+        }
+        for (long i = 0; i < month1; i++) {
+                daysFromZeroMonthOne += daysInMonth(i, year1);
+        }
+        System.out.println(daysFromZeroMonthZero);
+        System.out.println(daysFromZeroMonthOne);
+        long difference = 0;
+        if(isValidDate(month0, day0, year0) && isValidDate(month1, day1, year1)) {
+                long totalDaysFromYearZero = daysFromZeroYearZero + daysFromZeroMonthZero + day0;
+                long totalDaysFromYearOne = daysFromZeroYearOne + daysFromZeroMonthOne + day1;
+                difference = Math.abs(daysFromZeroYearOne - daysFromZeroYearZero);
         }
         return difference;
 }
@@ -164,7 +174,7 @@ public static void main (String[] args) {
                 long month1 = Integer.parseInt(args[4]);
                 long year1 = Integer.parseInt(args[5]);
                 if (isValidDate(day0, month0, year0) && isValidDate(day1, month1, year1)) {
-                        System.out.println("There " + daysBetween(day0, month0, year0, day1, month1, year1) + "between " + longformDate(day0, month0, year0) + " and " + longformDate(day1, month1, year1) + "!");
+                        System.out.println("There are " + daysBetween(day0, month0, year0, day1, month1, year1) + " days between " + longformDate(day0, month0, year0) + " and " + longformDate(day1, month1, year1) + "!");
                 } else {
                         System.out.println("Invalid date entered!");
                 }
