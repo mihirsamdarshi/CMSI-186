@@ -63,31 +63,6 @@ public static boolean isValidDate (long month, long day, long year ) {
         return isValidYear && isValidMonth && isValidDay;
 }
 
-public static boolean isYearOneBigger(long month0, long day0, long year0, long month1, long day1, long year1){
-        if (year0 > year1) {
-                return false;
-        }
-        else if (year0 == year1) {
-                if (month0 > month1) {
-                        return false;
-                }
-                else if (month0 == month1) {
-                        if (day0 > day1) {
-                                return false;
-                        }
-                        else {
-                                return true;
-                        }
-                }
-                else {
-                        return true;
-                }
-        }
-        else {
-                return true;
-        }
-}
-
 public static long daysBetween (long month0, long day0, long year0, long month1, long day1, long year1) {
         long daysFromZeroYearZero = 0;
         long daysFromZeroYearOne = 0;
@@ -110,18 +85,16 @@ public static long daysBetween (long month0, long day0, long year0, long month1,
         long daysFromZeroMonthZero = 0;
         long daysFromZeroMonthOne = 0;
         for (long i = 0; i < month0; i++) {
-                daysFromZeroMonthZero += daysInMonth(i, year0);
+                daysFromZeroMonthZero += daysInMonth(year0, i);
+                System.out.println(daysFromZeroMonthZero);
         }
         for (long i = 0; i < month1; i++) {
-                daysFromZeroMonthOne += daysInMonth(i, year1);
+                daysFromZeroMonthOne += daysInMonth(year1, i);
         }
-        System.out.println(daysFromZeroMonthZero);
-        System.out.println(daysFromZeroMonthOne);
         long difference = 0;
         if(isValidDate(month0, day0, year0) && isValidDate(month1, day1, year1)) {
                 long totalDaysFromYearZero = daysFromZeroYearZero + daysFromZeroMonthZero + day0;
                 long totalDaysFromYearOne = daysFromZeroYearOne + daysFromZeroMonthOne + day1;
-                difference = Math.abs(daysFromZeroYearOne - daysFromZeroYearZero);
         }
         return difference;
 }
@@ -129,8 +102,11 @@ public static long daysBetween (long month0, long day0, long year0, long month1,
 
 
 public static String dayOfTheWeek (long month, long day, long year ) {
-        long start = daysBetween(month, day, year, 1, 1, 2000) % 7;
-        switch((int)start) {
+        long initDate = daysBetween(month, day, year, 1, 1, 2000) % 7;
+        if (year < 2000) {
+                initDate = initDate + 5;
+        }
+        switch((int)initDate) {
         case 0: return "Sunday";
         case 1: return "Monday";
         case 2: return "Tuesday";
