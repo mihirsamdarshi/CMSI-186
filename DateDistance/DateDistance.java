@@ -64,38 +64,44 @@ public static boolean isValidDate (long month, long day, long year ) {
 }
 
 public static long daysBetween (long month0, long day0, long year0, long month1, long day1, long year1) {
-        long daysFromZeroYearZero = 0;
-        long daysFromZeroYearOne = 0;
-        for (long i = 0; i < year0; i++) {
-                if(isLeapYear(i)) {
-                        daysFromZeroYearZero += 366;
+        long result = 0;
+        long daysPerYear0 = 0;
+        long daysPerYear1 = 0;
+        long daysPerMonths0 = 0;
+        long daysPerMonths1 = 0;
+
+        for (long x = 1; x < year0; x++) {
+                if(!isLeapYear(x)) {
+                        daysPerYear0 = daysPerYear0 + 365;
                 }
-                if(!isLeapYear(i)) {
-                        daysFromZeroYearZero += 365;
-                }
-        }
-        for (long i = 0; i < year1; i++) {
-                if(isLeapYear(i)) {
-                        daysFromZeroYearOne += 366;
-                }
-                if(!isLeapYear(i)) {
-                        daysFromZeroYearOne += 365;
+                if(isLeapYear(x)) {
+                        daysPerYear0 = daysPerYear0 + 366;
                 }
         }
-        long daysFromZeroMonthZero = 0;
-        long daysFromZeroMonthOne = 0;
-        for (long i = 0; i < month0; i++) {
-                daysFromZeroMonthZero += daysInMonth(year0, i);
+
+        for (long y = 1; y < year1; y++) {
+                if(!isLeapYear(y)) {
+                        daysPerYear1 = daysPerYear1 + 365;
+                }
+                if(isLeapYear(y)) {
+                        daysPerYear1 = daysPerYear1 + 366;
+                }
         }
-        for (long i = 0; i < month1; i++) {
-                daysFromZeroMonthOne += daysInMonth(year1, i);
+
+        for(long m = 1; m < month0; m++) {
+                daysPerMonths0 = daysPerMonths0 + daysInMonth(m, year0);
         }
-        long difference = 0;
+
+        for(long n = 1; n < month1; n++) {
+                daysPerMonths1 = daysPerMonths1 + daysInMonth(n, year1);
+        }
+
         if(isValidDate(month0, day0, year0) && isValidDate(month1, day1, year1)) {
-                long totalDaysFromYearZero = daysFromZeroYearZero + daysFromZeroMonthZero + day0;
-                long totalDaysFromYearOne = daysFromZeroYearOne + daysFromZeroMonthOne + day1;
+                long initialDays = daysPerMonths0 + day0 + daysPerYear0;
+                long finalDays = daysPerMonths1 + day1 + daysPerYear1;
+                result = Math.abs(finalDays - initialDays);
         }
-        return difference;
+        return result;
 }
 
 
