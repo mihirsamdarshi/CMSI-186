@@ -17,7 +17,7 @@ protected int faceUpIndex;
  * Shield, Heal, and Broken Shield).
  */
 public CombatDie() {
-        this.faces = new DiceFace[3];
+        this.faces = new DiceFace[4];
         faces[0] = new DiceFace(DiceFace.FaceType.SWORD, 1);
         faces[1] = new DiceFace(DiceFace.FaceType.HEAL, 1);
         faces[2] = new DiceFace(DiceFace.FaceType.SHIELD, 1);
@@ -36,7 +36,7 @@ public CombatDie(DiceFace[] faces) {
         this.faces = faces;
         this.faceUpIndex = 0;
         if (faces.length < 2) {
-                throw new UnsupportedOperationException();
+                throw new IllegalArgumentException();
         }
 }
 
@@ -48,10 +48,7 @@ public CombatDie(DiceFace[] faces) {
  * @return        the dice face at the given index
  */
 public DiceFace getFaceAtIndex(int index) {
-        return faces[index];
-        if (faces[index] == null) {
-                throw new UnsupportedOperationException();
-        }
+        return this.faces[index];
 }
 
 /**
@@ -61,8 +58,7 @@ public DiceFace getFaceAtIndex(int index) {
  * @param index   the index where the new face is to be placed.
  */
 public void setFaceAtIndex(DiceFace face, int index) {
-        faces[index].FaceType = DiceFace.setFaceType(face);
-        throw new UnsupportedOperationException();
+        faces[index] = face;
 }
 
 /**
@@ -71,7 +67,7 @@ public void setFaceAtIndex(DiceFace face, int index) {
  * @return   this die's number of faces
  */
 public int getNumberOfFaces() {
-        throw new UnsupportedOperationException();
+        return faces.length;
 }
 
 /**
@@ -80,7 +76,7 @@ public int getNumberOfFaces() {
  * @return   the index of the face that is face-up on this die
  */
 public int getFaceUpIndex() {
-        throw new UnsupportedOperationException();
+        return this.faceUpIndex;
 }
 
 /**
@@ -89,7 +85,7 @@ public int getFaceUpIndex() {
  * @return   the face that is face-up on this die
  */
 public DiceFace getFaceUp() {
-        throw new UnsupportedOperationException();
+        return faces[faceUpIndex];
 }
 
 /**
@@ -101,7 +97,7 @@ public DiceFace getFaceUp() {
  *                                   die
  */
 public void setFaceUpIndex(int index) {
-        throw new UnsupportedOperationException();
+        throw new IllegalArgumentException();
 }
 
 /**

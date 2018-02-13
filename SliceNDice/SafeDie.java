@@ -1,11 +1,9 @@
 public class SafeDie extends CombatDie {
 /**
  * Constructs a 6-sided die with the following faces:
- * <ul>
- * <li>3 Sword faces
- * <li>2 Shield faces
- * <li>1 Heal face
- * </ul>
+ * 3 Sword faces
+ * 2 Shield faces
+ * 1 Heal face
  */
 public SafeDie() {
         throw new UnsupportedOperationException();
