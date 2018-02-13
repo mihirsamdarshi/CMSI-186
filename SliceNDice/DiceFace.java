@@ -51,7 +51,7 @@ public DiceFace(FaceType faceType, long faceValue) {
 /**
  * Returns the face type of this dice face.
  *
- * @return  the type of face (Sword, Shield, Heal, or Broken Shield)
+ * @return the type of face (Sword, Shield, Heal, or Broken Shield)
  */
 public FaceType getFaceType() {
         return this.faceType;

@@ -2,8 +2,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * <P>A class representing a die made for the SliceNDice game.
- * <P>Each die has 2 or more sides, represented by the DiceFace class.
+ * A class representing a die made for the SliceNDice game.
+ * Each die has 2 or more sides, represented by the DiceFace class.
  *
  * @author Mihir Samdarshi
  */
@@ -17,8 +17,12 @@ protected int faceUpIndex;
  * Shield, Heal, and Broken Shield).
  */
 public CombatDie() {
-        setFaceType
-        throw new UnsupportedOperationException();
+        this.faces = new DiceFace[3];
+        faces[0] = new DiceFace(DiceFace.FaceType.SWORD, 1);
+        faces[1] = new DiceFace(DiceFace.FaceType.HEAL, 1);
+        faces[2] = new DiceFace(DiceFace.FaceType.SHIELD, 1);
+        faces[3] = new DiceFace(DiceFace.FaceType.BROKEN_SHIELD, 1);
+        this.faceUpIndex = 0;
 }
 
 /**
@@ -29,18 +33,25 @@ public CombatDie() {
  *                                    in the given array
  */
 public CombatDie(DiceFace[] faces) {
-        throw new UnsupportedOperationException();
+        this.faces = faces;
+        this.faceUpIndex = 0;
+        if (faces.length < 2) {
+                throw new UnsupportedOperationException();
+        }
 }
 
 /**
  * Returns the dice face at the given index on this die.
  *
- * @param index   the index of a dice face within the die's arry of dice
+ * @param index   the index of a dice face within the die's array of dice
  *                faces
  * @return        the dice face at the given index
  */
 public DiceFace getFaceAtIndex(int index) {
-        throw new UnsupportedOperationException();
+        return faces[index];
+        if (faces[index] == null) {
+                throw new UnsupportedOperationException();
+        }
 }
 
 /**
@@ -50,6 +61,7 @@ public DiceFace getFaceAtIndex(int index) {
  * @param index   the index where the new face is to be placed.
  */
 public void setFaceAtIndex(DiceFace face, int index) {
+        faces[index].FaceType = DiceFace.setFaceType(face);
         throw new UnsupportedOperationException();
 }
 
