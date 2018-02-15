@@ -97,7 +97,10 @@ public DiceFace getFaceUp() {
  *                                   die
  */
 public void setFaceUpIndex(int index) {
-        throw new IllegalArgumentException();
+        faces[faceUpIndex] = faces[index];
+        if (index > faces.length) {
+                throw new IllegalArgumentException();
+        }
 }
 
 /**
@@ -106,7 +109,7 @@ public void setFaceUpIndex(int index) {
  * @return the current face-up face of this die in a String
  */
 public String currentFaceToString() {
-        throw new UnsupportedOperationException();
+        return "The current die face is " + faces[faceUpIndex].FaceType;
 }
 
 /**
@@ -114,7 +117,7 @@ public String currentFaceToString() {
  * random.
  */
 public void roll() {
-        throw new UnsupportedOperationException();
+        faceUpIndex = (long)Math.floor((Math.random() * this.faces.length) + 1);
 }
 
 /**
@@ -125,7 +128,13 @@ public void roll() {
  *                    wanted face
  */
 public int faceCount(DiceFace wantedFace) {
-        throw new UnsupportedOperationException();
+        int count = 0;
+        for (i = 0; i < faces.length; i++) {
+                if (faces[i] == wantedFace) {
+                        count++;
+                }
+        }
+        return count;
 }
 
 /**
@@ -135,7 +144,25 @@ public int faceCount(DiceFace wantedFace) {
  */
 @Override
 public String toString() {
-        throw new UnsupportedOperationException();
+        int swordCount = 0;
+        int shieldCount = 0;
+        int healCount = 0;
+        int brokenshieldCount = 0;
+        for (i = 0; i < faces.length; i++) {
+                if (faces[i] == faces.FaceType.SWORD) {
+                        return swordCount++;
+                }
+                else if (faces[i] == faces.FaceType.HEAL) {
+                        return swordCount++;
+                }
+                else if (faces[i] == faces.FaceType.BROKEN_SHIELD) {
+                        return swordCount++;
+                }
+                else if (faces[i] == faces.FaceType.SHIELD) {
+                        return swordCount++;
+                }
+        }
+        return "{ Sword " + swordCount + ", Shield " + shieldCount + ", Heal " + healCount + ", Broken Shield " + brokenshieldCount + " }";
 }
 
 // Advanced Java---Proceed at own risk!
