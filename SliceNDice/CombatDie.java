@@ -109,7 +109,7 @@ public void setFaceUpIndex(int index) {
  * @return the current face-up face of this die in a String
  */
 public String currentFaceToString() {
-        return "The current die face is " + faces[faceUpIndex].FaceType;
+        return "The current die face is " + this.faces[faceUpIndex].getfaceType;
 }
 
 /**
@@ -117,7 +117,7 @@ public String currentFaceToString() {
  * random.
  */
 public void roll() {
-        faceUpIndex = (long)Math.floor((Math.random() * this.faces.length) + 1);
+        faceUpIndex = (int)Math.floor((Math.random() * this.faces.length) + 1);
 }
 
 /**
@@ -129,7 +129,7 @@ public void roll() {
  */
 public int faceCount(DiceFace wantedFace) {
         int count = 0;
-        for (i = 0; i < faces.length; i++) {
+        for (int i = 0; i < faces.length; i++) {
                 if (faces[i] == wantedFace) {
                         count++;
                 }
@@ -144,25 +144,15 @@ public int faceCount(DiceFace wantedFace) {
  */
 @Override
 public String toString() {
-        int swordCount = 0;
-        int shieldCount = 0;
-        int healCount = 0;
-        int brokenshieldCount = 0;
-        for (i = 0; i < faces.length; i++) {
-                if (faces[i] == faces.FaceType.SWORD) {
-                        return swordCount++;
+        string output = "{ ";
+        for (int i = 0; i < faces.length - 1; i++) {
+                output += this.faces[i] + ", ";
+                if (i = faces.length - 1) {
+                        output += this.faces[i];
                 }
-                else if (faces[i] == faces.FaceType.HEAL) {
-                        return swordCount++;
-                }
-                else if (faces[i] == faces.FaceType.BROKEN_SHIELD) {
-                        return swordCount++;
-                }
-                else if (faces[i] == faces.FaceType.SHIELD) {
-                        return swordCount++;
-                }
+                output += " }";
         }
-        return "{ Sword " + swordCount + ", Shield " + shieldCount + ", Heal " + healCount + ", Broken Shield " + brokenshieldCount + " }";
+        return output;
 }
 
 // Advanced Java---Proceed at own risk!
