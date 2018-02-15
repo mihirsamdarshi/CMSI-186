@@ -2,7 +2,7 @@
  * <P>A class a Player in the SliceNDice game.
  * <P>Each player has a set of dice made for the game as well as a health total.
  *
- * @author Yourname Here
+ * @author Mihir Samdarshi
  */
 
 public class Player {
@@ -10,7 +10,7 @@ public class Player {
  * The initial health given for a player if no other health total is
  * specified.
  */
-public static final int DEFAULT_STARTING_HEALTH;     //TODO: Define me!
+public static final int DEFAULT_STARTING_HEALTH = 50;
 private int health;
 private CombatDie[] dice;
 
@@ -29,7 +29,7 @@ private CombatDie[] dice;
  *                                    numberOfDice
  */
 public Player(int startingHealth, int numberOfDice, int numberOfRiskyDice) {
-        throw new UnsupportedOperationException();
+        throw new IllegalArgumentException();
 }
 
 /**

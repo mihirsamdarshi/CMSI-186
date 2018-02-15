@@ -97,10 +97,11 @@ public DiceFace getFaceUp() {
  *                                   die
  */
 public void setFaceUpIndex(int index) {
-        faces[faceUpIndex] = faces[index];
-        if (index > faces.length) {
+        if (index >= faces.length || index < 0) {
                 throw new IllegalArgumentException();
         }
+        faceUpIndex = index;
+
 }
 
 /**
@@ -109,7 +110,7 @@ public void setFaceUpIndex(int index) {
  * @return the current face-up face of this die in a String
  */
 public String currentFaceToString() {
-        return "The current die face is " + this.faces[faceUpIndex].getfaceType;
+        return "The current die face is " + this.faces[faceUpIndex].getFaceType();
 }
 
 /**
@@ -144,14 +145,15 @@ public int faceCount(DiceFace wantedFace) {
  */
 @Override
 public String toString() {
-        string output = "{ ";
-        for (int i = 0; i < faces.length - 1; i++) {
-                output += this.faces[i] + ", ";
-                if (i = faces.length - 1) {
-                        output += this.faces[i];
+        String output = "{ ";
+        for (int i = 0; i < faces.length; i++) {
+                output += this.faces[i];
+                if (i != faces.length - 1) {
+                        output += ", ";
                 }
-                output += " }";
         }
+        output += " }";
+        System.out.println(output);
         return output;
 }
 

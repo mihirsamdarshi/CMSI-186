@@ -627,12 +627,14 @@ private static void test_CombatDieGetSetFaceUp() {
         try {
                 CombatDie testDie = new CombatDie();
                 testDie.setFaceUpIndex(2);
+                System.out.println(testDie.getFaceUpIndex());
                 displaySuccessIfTrue(testDie.getFaceUpIndex() == 2 &&
                                      testDie.getFaceUp().equals(testDie.getFaceAtIndex(2)));
         } catch (UnsupportedOperationException uoe) {
                 displayUnimplementedMethodFailure();
         } catch(Exception e) {
                 displaySuccessIfTrue(false);
+                e.printStackTrace();
         }
 
         try {
