@@ -940,4 +940,23 @@ private static void test_SafeAndRiskyDieConstructors() {
 
         System.out.println("SafeDie & RiskyDie constructors: " + (successes - initialSuccesses) + "/" + (attempts - initialAttempts) + " passed");
 }
+private static void test_PlayerConstructor() {
+        System.out.println("Testing Player constructors...");
+
+        int initialSuccesses = successes;
+        int initialAttempts = attempts;
+
+        try {
+                Player testPlayer = new Player(50, 8, 9);
+                displaySuccessIfTrue(
+                        testPlayer.getHealth() == 50
+                        && testPlayer.numberOfDice == 9
+                        && testPlayer.numberOfRiskyDice == 8);
+        } catch (UnsupportedOperationException uoe) {
+                displayUnimplementedMethodFailure();
+        } catch(Exception e) {
+                displaySuccessIfTrue(false);
+        }
+        System.out.println("Player Constructors: " + (successes - initialSuccesses) + "/" + (attempts - initialAttempts) + " passed");
+}
 }

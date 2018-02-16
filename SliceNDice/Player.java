@@ -29,7 +29,18 @@ private CombatDie[] dice;
  *                                    numberOfDice
  */
 public Player(int startingHealth, int numberOfDice, int numberOfRiskyDice) {
-        throw new IllegalArgumentException();
+        if (numberOfRiskyDice > numberOfDice) {
+                throw new IllegalArgumentException();
+        }
+        health = startingHealth;
+        dice = new CombatDie[numberOfDice];
+        for (i = 0; i < numberOfRiskyDice; i++) {
+                dice[i] = new RiskyDie();
+        }
+        for (i = numberOfRiskyDice; i < numberOfDice; i++) {
+                dice[i] = new SafeDie();
+        }
+
 }
 
 /**
@@ -46,7 +57,10 @@ public Player(int startingHealth, int numberOfDice, int numberOfRiskyDice) {
  *                                    numberOfDice
  */
 public Player(int numberOfDice, int numberOfRiskyDice) {
-        throw new UnsupportedOperationException();
+        getHealth = DEFAULT_STARTING_HEALTH;
+        if (numberOfRiskyDice > numberOfDice) {
+                throw new IllegalArgumentException();
+        }
 }
 
 /**
@@ -55,7 +69,7 @@ public Player(int numberOfDice, int numberOfRiskyDice) {
  * @return this Player's health value.
  */
 public int getHealth() {
-        throw new UnsupportedOperationException();
+        return this.health;
 }
 
 /**

@@ -19,8 +19,8 @@ protected int faceUpIndex;
 public CombatDie() {
         this.faces = new DiceFace[4];
         faces[0] = new DiceFace(DiceFace.FaceType.SWORD, 1);
-        faces[1] = new DiceFace(DiceFace.FaceType.HEAL, 1);
-        faces[2] = new DiceFace(DiceFace.FaceType.SHIELD, 1);
+        faces[1] = new DiceFace(DiceFace.FaceType.SHIELD, 1);
+        faces[2] = new DiceFace(DiceFace.FaceType.HEAL, 1);
         faces[3] = new DiceFace(DiceFace.FaceType.BROKEN_SHIELD, 1);
         this.faceUpIndex = 0;
 }
@@ -118,7 +118,7 @@ public String currentFaceToString() {
  * random.
  */
 public void roll() {
-        faceUpIndex = (int)Math.floor((Math.random() * this.faces.length) + 1);
+        faceUpIndex = (int)Math.floor(Math.random() * this.faces.length);
 }
 
 /**
@@ -130,8 +130,8 @@ public void roll() {
  */
 public int faceCount(DiceFace wantedFace) {
         int count = 0;
-        for (int i = 0; i < faces.length; i++) {
-                if (faces[i] == wantedFace) {
+        for (int i = 0; i < this.faces.length; i++) {
+                if (wantedFace.equals(this.faces[i])) {
                         count++;
                 }
         }
