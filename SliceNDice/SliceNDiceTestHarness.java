@@ -32,6 +32,7 @@ public static void main(String[] args) {
         test_CombatDieRoll();
         test_CombatDieFaceCount();
         test_SafeAndRiskyDieConstructors();
+        test_PlayerConstructor();
 
         // TODO: Tests for Player and SliceNDice
 
@@ -627,7 +628,6 @@ private static void test_CombatDieGetSetFaceUp() {
         try {
                 CombatDie testDie = new CombatDie();
                 testDie.setFaceUpIndex(2);
-                System.out.println(testDie.getFaceUpIndex());
                 displaySuccessIfTrue(testDie.getFaceUpIndex() == 2 &&
                                      testDie.getFaceUp().equals(testDie.getFaceAtIndex(2)));
         } catch (UnsupportedOperationException uoe) {
@@ -940,6 +940,7 @@ private static void test_SafeAndRiskyDieConstructors() {
 
         System.out.println("SafeDie & RiskyDie constructors: " + (successes - initialSuccesses) + "/" + (attempts - initialAttempts) + " passed");
 }
+
 private static void test_PlayerConstructor() {
         System.out.println("Testing Player constructors...");
 
@@ -947,16 +948,16 @@ private static void test_PlayerConstructor() {
         int initialAttempts = attempts;
 
         try {
-                Player testPlayer = new Player(50, 8, 9);
+                Player testPlayer = new Player(50, 9, 8);
                 displaySuccessIfTrue(
-                        testPlayer.getHealth() == 50
-                        && testPlayer.numberOfDice == 9
-                        && testPlayer.numberOfRiskyDice == 8);
+                        testPlayer.getHealth() == 50);
+                System.out.println();
         } catch (UnsupportedOperationException uoe) {
                 displayUnimplementedMethodFailure();
         } catch(Exception e) {
                 displaySuccessIfTrue(false);
         }
+
         System.out.println("Player Constructors: " + (successes - initialSuccesses) + "/" + (attempts - initialAttempts) + " passed");
 }
 }
