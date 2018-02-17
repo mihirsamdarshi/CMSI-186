@@ -16,14 +16,14 @@ protected int faceUpIndex;
  * Constructs a 4-sided die with a 1-value face of each variety (Sword,
  * Shield, Heal, and Broken Shield).
  */
-public CombatDie() {
+    public CombatDie() {
         this.faces = new DiceFace[4];
         faces[0] = new DiceFace(DiceFace.FaceType.SWORD, 1);
         faces[1] = new DiceFace(DiceFace.FaceType.SHIELD, 1);
         faces[2] = new DiceFace(DiceFace.FaceType.HEAL, 1);
         faces[3] = new DiceFace(DiceFace.FaceType.BROKEN_SHIELD, 1);
         this.faceUpIndex = 0;
-}
+    }
 
 /**
  * Constructs a die with the given faces.

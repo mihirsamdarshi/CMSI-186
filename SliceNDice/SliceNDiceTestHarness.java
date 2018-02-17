@@ -951,7 +951,6 @@ private static void test_PlayerConstructor() {
                 Player testPlayer = new Player(50, 9, 8);
                 displaySuccessIfTrue(
                         testPlayer.getHealth() == 50);
-                System.out.println();
         } catch (UnsupportedOperationException uoe) {
                 displayUnimplementedMethodFailure();
         } catch(Exception e) {

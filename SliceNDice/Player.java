@@ -10,9 +10,9 @@ public class Player {
  * The initial health given for a player if no other health total is
  * specified.
  */
-public static final int DEFAULT_STARTING_HEALTH = 50;
-private int health;
-private CombatDie[] dice;
+    public static final int DEFAULT_STARTING_HEALTH = 50;
+    private int health;
+    private CombatDie[] dice;
 
 /**
  * Constructs a Player with the given health and an array of dice of the
@@ -28,7 +28,7 @@ private CombatDie[] dice;
  * @throws IllegalArgumentException   if numberOfRiskyDice is greater than
  *                                    numberOfDice
  */
-public Player(int startingHealth, int numberOfDice, int numberOfRiskyDice) {
+    public Player(int startingHealth, int numberOfDice, int numberOfRiskyDice) {
         if (numberOfRiskyDice > numberOfDice) {
                 throw new IllegalArgumentException();
         }
@@ -87,7 +87,9 @@ public CombatDie getDieAtIndex(int index) {
  * side of each die.
  */
 public void rollAllDice() {
-        throw new UnsupportedOperationException();
+        for (int i = 0; i < dice.length; i++) {
+                dice[i].roll();
+        }
 }
 
 /**
@@ -99,7 +101,13 @@ public void rollAllDice() {
  *                  FaceType among the Player's CombatDie array
  */
 public int countOfFaceType(DiceFace.FaceType faceType) {
-        throw new UnsupportedOperationException();
+        int count = 0;
+        for (int i = 0; i < dice.length; i++) {
+                if (faceType.equals(dice[i].getFaceUp())) {
+                        count++;
+                }
+        }
+        return count;
 }
 
 /**
@@ -111,7 +119,14 @@ public int countOfFaceType(DiceFace.FaceType faceType) {
  *         <code>false</code> otherwise.
  */
 public boolean containsBrokenShield(){
-        throw new UnsupportedOperationException();
+        for (int i = 0; i < dice.length; i++) {
+                if (dice[i] instanceof RiskyDie && dice[i].getFaceUp().equals(DiceFace.FaceType.BROKEN_SHIELD)) {
+                        return true;
+                } else {
+                        continue;
+                }
+        }
+        return false;
 }
 
 /**
@@ -122,6 +137,9 @@ public boolean containsBrokenShield(){
  *         Sword DiceFaces among the player's dice.
  */
 public int getAttackScore() {
+        for (int i = 0; i < dice.length; i++) {
+
+        }
         throw new UnsupportedOperationException();
 }
 
