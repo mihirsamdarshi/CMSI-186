@@ -140,7 +140,7 @@ public class Player {
         int swordValue = 0;
         for (int i = 0; i < dice.length; i++) {
             if (dice[i].getFaceUp().equals(DiceFace.FaceType.SWORD)) {
-                swordValue += dice[i].getFaceValue();
+                swordValue += (dice[i].getFaceUp().getFaceValue());
             }
         }
         return swordValue;
@@ -160,7 +160,7 @@ public class Player {
         int shieldValue = 0;
         for (int i = 0; i < dice.length; i++) {
             if (dice[i].getFaceUp().equals(DiceFace.FaceType.SHIELD)) {
-                shieldValue += dice[i].getFaceValue();
+                shieldValue += 1;
             }
         }
         return shieldValue;
@@ -177,7 +177,7 @@ public class Player {
         int healValue = 0;
         for (int i = 0; i < dice.length; i++) {
             if (dice[i].getFaceUp().equals(DiceFace.FaceType.HEAL)) {
-                healValue += dice[i].getFaceValue();
+                healValue += 1;
             }
         }
         return healValue;
@@ -203,5 +203,6 @@ public class Player {
         output += getAttackScore() + ", ";
         output += getDefenseScore() + ", ";
         output += getHealScore();
+        return output;
     }
 }
