@@ -3,32 +3,42 @@ SliceNDice.java, which plays a two player game as follows when run from the comm
 */
 //TODO: fill out standardGame
 public class SliceNDice {
-    public static String standardGame(int numberOfDice, int numberOfRiskyDice) {
+    public static final int DEFAULT_NUMBER_OF_DICE = 7;
+    public static final int DEFAULT_NUMBER_OF_RISKY_DICE = 1;
+    private Player[] players;
+
+    public static String standardGame (int numberOfDice, int numberOfRiskyDiceP1, int numberOfRiskyDiceP2) {
+        numberOfDice = DEFAULT_NUMBER_OF_DICE;
+        numberOfRiskyDiceP1 = DEFAULT_NUMBER_OF_RISKY_DICE;
+        numberOfRiskyDiceP2 = DEFAULT_NUMBER_OF_RISKY_DICE;
         return "false";
     }
 
     public static void main (String[] args) {
         if (args.length == 0) {
-            standardGame();
-        }
-        else if (args.length == 1) {
+            int numberOfDice = DEFAULT_NUMBER_OF_DICE;
+            int numberOfRiskyDiceP1 = DEFAULT_NUMBER_OF_RISKY_DICE;
+            int numberOfRiskyDiceP2 = DEFAULT_NUMBER_OF_RISKY_DICE;
+            standardGame(numberOfDice, numberOfRiskyDiceP1, numberOfRiskyDiceP2);
+        } else if (args.length == 1) {
             try {
                     int numberOfDice = Integer.parseInt(args[0]);
-                    standardGame(numberOfDice);
+                    int numberOfRiskyDiceP1 = DEFAULT_NUMBER_OF_RISKY_DICE;
+                    int numberOfRiskyDiceP2 = DEFAULT_NUMBER_OF_RISKY_DICE;
+                    standardGame(numberOfDice, numberOfRiskyDiceP1, numberOfRiskyDiceP2);
             } catch (Exception e) {
                 System.out.println("Please input valid arguments, or to start a standard game, none at all");
             }
-        }
-        else if (args.length == 2) {
+        } else if (args.length == 2) {
             try {
                     int numberOfDice = Integer.parseInt(args[0]);
-                    int numberOfRiskyDice = Integer.parseInt(args[1]);
-                    standardGame(numberOfDice, numberOfRiskyDice);
+                    int numberOfRiskyDiceP1 = Integer.parseInt(args[1]);
+                    int numberOfRiskyDiceP2 = Integer.parseInt(args[1]);
+                    standardGame(numberOfDice, numberOfRiskyDiceP1, numberOfRiskyDiceP2);
             } catch (Exception e) {
                 System.out.println("Please input valid arguments, or to start a standard game, none at all");
             }
-        }
-        else if (args.length == 3) {
+        } else if (args.length == 3) {
             try {
                     int numberOfDice = Integer.parseInt(args[0]);
                     int numberOfRiskyDiceP1 = Integer.parseInt(args[1]);
@@ -37,14 +47,12 @@ public class SliceNDice {
             } catch (Exception e) {
                 System.out.println("Please input valid arguments, or to start a standard game, none at all");
             }
-        }
-        else {
+        } else {
             System.out.println("Please input valid arguments, or to start a standard game, none at all");
         }
     }
 
 /*
-When run from the command line with 3 integer arguments, SliceNDice will play a game with a number of dice equal to the first argument for each player; the number of "risky" dice the first player has will be equal to the second argument, while the second player will have a number of "risky" dice equal to the third argument. All non-"risky" dice belonging to either player will be "safe".
 
 When run from the command line with any other number of arguments or if any invalid arguments are provided (non-integers, negative number of dice, more risky dice than the player has, etc.), SliceNDice will print out usage instructions indicating acceptable arguments.
 
