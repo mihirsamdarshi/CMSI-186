@@ -1,5 +1,5 @@
 public class DateDistance {
-public static boolean isLeapYear (long year) {
+    public static boolean isLeapYear (long year) {
         if (year % 4 == 0) {
                 if (year % 100 == 0) {
                         if (year % 400 == 0) {
@@ -17,9 +17,9 @@ public static boolean isLeapYear (long year) {
         else {
                 return false;
         }
-}
+    }
 
-public static long daysInMonth (long year, long month) {
+    public static long daysInMonth (long year, long month) {
         switch ((int)month) {
         case 1:  return 31;
         case 2:  if (isLeapYear((int)year)) {
@@ -40,9 +40,9 @@ public static long daysInMonth (long year, long month) {
         case 12: return 31;
         default: return 0;
         }
-}
+    }
 
-public static boolean isValidDate (long month, long day, long year ) {
+    public static boolean isValidDate (long month, long day, long year ) {
         boolean isValidYear = false;
         boolean isValidMonth = false;
         boolean isValidDay = false;
@@ -61,9 +61,9 @@ public static boolean isValidDate (long month, long day, long year ) {
                 }
         }
         return isValidYear && isValidMonth && isValidDay;
-}
+    }
 
-public static long daysBetween (long month0, long day0, long year0, long month1, long day1, long year1) {
+    public static long daysBetween (long month0, long day0, long year0, long month1, long day1, long year1) {
         long result = 0;
         long daysPerYear0 = 0;
         long daysPerYear1 = 0;
@@ -102,11 +102,11 @@ public static long daysBetween (long month0, long day0, long year0, long month1,
                 result = Math.abs(finalDays - initialDays);
         }
         return result;
-}
+    }
 
 
 
-public static String dayOfTheWeek (long month, long day, long year ) {
+    public static String dayOfTheWeek (long month, long day, long year ) {
         long initDate = daysBetween(month, day, year, 1, 1, 2000) % 7;
         if (year < 2000) {
                 initDate = initDate + 5;
@@ -121,10 +121,10 @@ public static String dayOfTheWeek (long month, long day, long year ) {
         case 6: return "Saturday";
         default: return "Invalid Date!";
         }
-}
+    }
 
 
-public static String monthInYear (long month ) {
+    public static String monthInYear (long month ) {
         switch((int)month) {
         case 1: return "January";
         case 2: return "February";
@@ -140,13 +140,13 @@ public static String monthInYear (long month ) {
         case 12: return "December";
         default: return "Invalid Month";
         }
-}
+    }
 
-public static String longformDate (long day, long month, long year) {
+    public static String longformDate (long day, long month, long year) {
         return dayOfTheWeek(day, month, year) + ", " + day + " " + monthInYear(month) + " " + year;
-}
+    }
 
-public static void main (String[] args) {
+    public static void main (String[] args) {
         try {
                 long day0 = Integer.parseInt(args[0]);
                 long month0 = Integer.parseInt(args[1]);
@@ -163,5 +163,5 @@ public static void main (String[] args) {
         catch (Exception e) {
                 System.out.println("Usage instructions: java DateDistance " + "<day0> <month0> <year0> <day1> <month1> <year1>");
         }
-}
+    }
 }
