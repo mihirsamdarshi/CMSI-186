@@ -9,18 +9,46 @@ public class SliceNDice {
     String newLine = System.getProperty("line.separator");
 
     public String standardGame (int numberOfDice, int numberOfRiskyDiceP1, int numberOfRiskyDiceP2) {
-        int roundNumber = 1;
-
         this.player = new Player[2];
         player[0] = new Player(50, numberOfDice, numberOfRiskyDiceP1);
         player[1] = new Player(50, numberOfDice, numberOfRiskyDiceP2);
 
         while(player[0].getHealth() > 0 || player[1].getHealth() > 0) {
-            System.out.println("Player One" + newLine + "-----------" + newLine + "Health: " + player[0].getHealth());
+            int roundNumber = 1;
+
+            int playerOneHealth = player[0].getHealth();
+            int playerTwoHealth = player[1].getHealth();
+
+            player[0].rollAllDice();
+            player[1].rollAllDice();
+
+            int playerOneAttackScore = player[0].getAttackScore();
+            int playerTwoAttackScore = player[1].getAttackScore();
+            int playerOneDefenseScore = player[0].getDefenseScore();
+            int playerTwoDefenseScore = player[1].getDefenseScore();
+            int playerOneHealScore = player[0].getHealScore();
+            int playerTwoHealScore = player[1].getHealScore();
+
+            System.out.println("***" + "Round" + roundNumber + "***" + newLine + newLine);
+            System.out.println("Player One" + newLine + "-----------" + newLine + "Health: " + playerOneHealth + newLine + player[0].toString() + newLine + "Attack: " + playerOneAttackScore + newLine + "Defense: " + playerOneDefenseScore + newLine + "Healing: " + playerOneHealScore + newLine);
+            System.out.println("Player Two" + newLine + "-----------" + newLine + "Health: " + playerOneHealth + newLine + player[1].toString() + newLine + "Attack: " + playerOneAttackScore + newLine + "Defense: " + playerTwoDefenseScore + newLine + "Healing: " + playerTwoHealScore + newLine);
+
+            int playerOneDamageDealt = playerOneAttackScore - playerOneDefenseScore - playerOneHealScore;
+            int playerTwoDamageDealt = playerTwoAttackScore - playerTwoDefenseScore - playerTwoHealScore;
+
+            player[0].setHealth(playerOneHealth - playerOneDamageDealt);
+            player[1].setHealth(playerTwoHealth - playerTwoDamageDealt);
         }
 
-        return "###### GAME OVER ######";
-
+        if (player[0].getHealth() > player[1].getHealth()) {
+            return "###### GAME OVER ######" + newLine + "Player 1 wins " + player[0].getHealth() + "to " + player[1].getHealth();
+        }
+        else if (player[1].getHealth() > player[0].getHealth()) {
+            return "###### GAME OVER ######" + newLine + "Player 2 wins " + player[1].getHealth() + "to " + player[0].getHealth();
+        }
+        else {
+            return "###### GAME OVER ######" + newLine + "It's a tie!";
+        }
     }
 
     public void main (String[] args) {
@@ -62,11 +90,6 @@ public class SliceNDice {
     }
 
 /*
-
-When run from the command line with any other number of arguments or if any invalid arguments are provided (non-integers, negative number of dice, more risky dice than the player has, etc.), SliceNDice will print out usage instructions indicating acceptable arguments.
-
-During a game, SliceNDice should print out the results of each round, including the results of each player's rolled dice, their scored values, damage dealt and healed from each player.
-
 When the game ends (either due to a player losing all health or 25 rounds have occured), a winner is declared. If both players have the same health, a tie is declared instead.
 */
 }

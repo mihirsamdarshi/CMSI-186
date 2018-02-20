@@ -71,6 +71,10 @@ public class Player {
         return this.health;
     }
 
+    public void setHealth(int newHealth) {
+        this.health = newHealth;
+    }
+
     /**
      * Returns the CombatDie at the given index in the Player's array of dice.
      *
