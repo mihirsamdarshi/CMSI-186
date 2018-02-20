@@ -5,16 +5,16 @@ SliceNDice.java, which plays a two player game as follows when run from the comm
 public class SliceNDice {
     public static final int DEFAULT_NUMBER_OF_DICE = 7;
     public static final int DEFAULT_NUMBER_OF_RISKY_DICE = 1;
-    public Player[] player;
-    String newLine = System.getProperty("line.separator");
+    private Player[] player;
+    static String newLine = System.getProperty("line.separator");
 
     public String standardGame (int numberOfDice, int numberOfRiskyDiceP1, int numberOfRiskyDiceP2) {
         this.player = new Player[2];
         player[0] = new Player(50, numberOfDice, numberOfRiskyDiceP1);
         player[1] = new Player(50, numberOfDice, numberOfRiskyDiceP2);
+        int roundNumber = 1;
 
-        while(player[0].getHealth() > 0 || player[1].getHealth() > 0) {
-            int roundNumber = 1;
+        while(player[0].getHealth() > 0 || player[1].getHealth() > 0 || roundNumber == 50) {
 
             int playerOneHealth = player[0].getHealth();
             int playerTwoHealth = player[1].getHealth();
@@ -38,6 +38,7 @@ public class SliceNDice {
 
             player[0].setHealth(playerOneHealth - playerOneDamageDealt);
             player[1].setHealth(playerTwoHealth - playerTwoDamageDealt);
+            roundNumber++;
         }
 
         if (player[0].getHealth() > player[1].getHealth()) {
@@ -51,12 +52,12 @@ public class SliceNDice {
         }
     }
 
-    public void main (String[] args) {
+    public static void main (String[] args) {
         if (args.length == 0) {
             int numberOfDice = DEFAULT_NUMBER_OF_DICE;
             int numberOfRiskyDiceP1 = DEFAULT_NUMBER_OF_RISKY_DICE;
             int numberOfRiskyDiceP2 = DEFAULT_NUMBER_OF_RISKY_DICE;
-            standardGame(numberOfDice, numberOfRiskyDiceP1, numberOfRiskyDiceP2);
+            SliceNDice.standardGame(numberOfDice, numberOfRiskyDiceP1, numberOfRiskyDiceP2);
         } else if (args.length == 1) {
             try {
                     int numberOfDice = Integer.parseInt(args[0]);
@@ -64,7 +65,7 @@ public class SliceNDice {
                     int numberOfRiskyDiceP2 = DEFAULT_NUMBER_OF_RISKY_DICE;
                     standardGame(numberOfDice, numberOfRiskyDiceP1, numberOfRiskyDiceP2);
             } catch (Exception e) {
-                System.out.println("Please input valid arguments, or to start a standard game, none at all");
+                System.out.println("Please input valid numerical arguments, or to start a standard game, none at all");
             }
         } else if (args.length == 2) {
             try {
@@ -73,7 +74,7 @@ public class SliceNDice {
                     int numberOfRiskyDiceP2 = Integer.parseInt(args[1]);
                     standardGame(numberOfDice, numberOfRiskyDiceP1, numberOfRiskyDiceP2);
             } catch (Exception e) {
-                System.out.println("Please input valid arguments, or to start a standard game, none at all");
+                System.out.println("Please input numerical valid arguments, or to start a standard game, none at all");
             }
         } else if (args.length == 3) {
             try {
@@ -82,10 +83,10 @@ public class SliceNDice {
                     int numberOfRiskyDiceP2 = Integer.parseInt(args[2]);
                     standardGame(numberOfDice, numberOfRiskyDiceP1, numberOfRiskyDiceP2);
             } catch (Exception e) {
-                System.out.println("Please input valid arguments, or to start a standard game, none at all");
+                System.out.println("Please input numerical valid arguments, or to start a standard game, none at all");
             }
         } else {
-            System.out.println("Please input valid arguments, or to start a standard game, none at all");
+            System.out.println("Please input numerical valid arguments, or to start a standard game, none at all");
         }
     }
 
