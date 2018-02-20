@@ -5,16 +5,25 @@ SliceNDice.java, which plays a two player game as follows when run from the comm
 public class SliceNDice {
     public static final int DEFAULT_NUMBER_OF_DICE = 7;
     public static final int DEFAULT_NUMBER_OF_RISKY_DICE = 1;
-    private Player[] players;
+    public Player[] player;
+    String newLine = System.getProperty("line.separator");
 
-    public static String standardGame (int numberOfDice, int numberOfRiskyDiceP1, int numberOfRiskyDiceP2) {
-        numberOfDice = DEFAULT_NUMBER_OF_DICE;
-        numberOfRiskyDiceP1 = DEFAULT_NUMBER_OF_RISKY_DICE;
-        numberOfRiskyDiceP2 = DEFAULT_NUMBER_OF_RISKY_DICE;
-        return "false";
+    public String standardGame (int numberOfDice, int numberOfRiskyDiceP1, int numberOfRiskyDiceP2) {
+        int roundNumber = 1;
+
+        this.player = new Player[2];
+        player[0] = new Player(50, numberOfDice, numberOfRiskyDiceP1);
+        player[1] = new Player(50, numberOfDice, numberOfRiskyDiceP2);
+
+        while(player[0].getHealth() > 0 || player[1].getHealth() > 0) {
+            System.out.println("Player One" + newLine + "-----------" + newLine + "Health: " + player[0].getHealth());
+        }
+
+        return "###### GAME OVER ######";
+
     }
 
-    public static void main (String[] args) {
+    public void main (String[] args) {
         if (args.length == 0) {
             int numberOfDice = DEFAULT_NUMBER_OF_DICE;
             int numberOfRiskyDiceP1 = DEFAULT_NUMBER_OF_RISKY_DICE;

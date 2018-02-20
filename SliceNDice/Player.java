@@ -40,7 +40,6 @@ public class Player {
         for (int i = numberOfRiskyDice; i < numberOfDice; i++) {
             dice[i] = new SafeDie();
         }
-
     }
 
     /**
@@ -103,8 +102,8 @@ public class Player {
     public int countOfFaceType(DiceFace.FaceType faceType) {
         int count = 0;
         for (int i = 0; i < dice.length; i++) {
-            if (faceType.equals(dice[i].getFaceUp())) {
-                count++;
+            if (faceType.equals(dice[i].getFaceUp().getFaceType())) {
+                count += dice[i].getFaceUp().getFaceValue();
             }
         }
         return count;

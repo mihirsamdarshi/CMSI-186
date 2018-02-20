@@ -948,9 +948,20 @@ public class SliceNDiceTestHarness {
         int initialAttempts = attempts;
 
         try {
-            Player testPlayer = new Player(50, 9, 8);
+            Player testPlayer = new Player(50, 8, 1);
+            System.out.println(testPlayer.getDieAtIndex(1));
             displaySuccessIfTrue(
                     testPlayer.getHealth() == 50);
+        } catch (UnsupportedOperationException uoe) {
+            displayUnimplementedMethodFailure();
+        } catch (Exception e) {
+            displaySuccessIfTrue(false);
+        }
+
+        try {
+            Player testPlayer = new Player(50, 9, 8);
+            displaySuccessIfTrue(
+                    testPlayer.countOfFaceType(DiceFace.FaceType.SWORD) == 17);
         } catch (UnsupportedOperationException uoe) {
             displayUnimplementedMethodFailure();
         } catch (Exception e) {
