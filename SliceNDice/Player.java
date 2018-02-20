@@ -163,6 +163,7 @@ public class Player {
     public int getDefenseScore() {
         int shieldValue = 0;
         for (int i = 0; i < dice.length; i++) {
+            System.out.println(dice[i].getFaceUp().getFaceType());
             if (dice[i].getFaceUp().getFaceType().equals(DiceFace.FaceType.SHIELD)) {
                 shieldValue += 1;
             }

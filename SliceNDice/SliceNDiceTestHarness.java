@@ -960,7 +960,29 @@ public class SliceNDiceTestHarness {
         try {
             Player testPlayer = new Player(50, 8, 1);
             displaySuccessIfTrue(
-                    testPlayer.getHealth() == 50);
+                    testPlayer.getAttackScore() == 9);
+        } catch (UnsupportedOperationException uoe) {
+            displayUnimplementedMethodFailure();
+        } catch (Exception e) {
+            displaySuccessIfTrue(false);
+        }
+
+        try {
+            Player testPlayer = new Player(50, 9 , 8);
+            System.out.println(testPlayer.getDefenseScore());
+            displaySuccessIfTrue(
+                    testPlayer.getDefenseScore() == 0);
+        } catch (UnsupportedOperationException uoe) {
+            displayUnimplementedMethodFailure();
+        } catch (Exception e) {
+            displaySuccessIfTrue(false);
+        }
+
+        try {
+            Player testPlayer = new Player(50, 9 , 8);
+            System.out.println(testPlayer.getHealScore());
+            displaySuccessIfTrue(
+                    testPlayer.getHealScore() == 0);
         } catch (UnsupportedOperationException uoe) {
             displayUnimplementedMethodFailure();
         } catch (Exception e) {
@@ -976,6 +998,7 @@ public class SliceNDiceTestHarness {
         } catch (Exception e) {
             displaySuccessIfTrue(false);
         }
+
         try {
             Player testPlayer = new Player(50, 9, 8);
             testPlayer.rollAllDice();
