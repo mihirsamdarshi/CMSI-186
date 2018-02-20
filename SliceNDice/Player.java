@@ -124,7 +124,7 @@ public class Player {
      */
     public boolean containsBrokenShield() {
         for (int i = 0; i < dice.length; i++) {
-            if (dice[i] instanceof RiskyDie && dice[i].getFaceUp().equals(DiceFace.FaceType.BROKEN_SHIELD)) {
+            if (dice[i] instanceof RiskyDie && dice[i].getFaceUp().getFaceType().equals(DiceFace.FaceType.BROKEN_SHIELD)) {
                 return true;
             } else {
                 continue;
@@ -143,7 +143,7 @@ public class Player {
     public int getAttackScore() {
         int swordValue = 0;
         for (int i = 0; i < dice.length; i++) {
-            if (dice[i].getFaceUp().equals(DiceFace.FaceType.SWORD)) {
+            if (dice[i].getFaceUp().getFaceType().equals(DiceFace.FaceType.SWORD)) {
                 swordValue += (dice[i].getFaceUp().getFaceValue());
             }
         }
@@ -163,7 +163,7 @@ public class Player {
     public int getDefenseScore() {
         int shieldValue = 0;
         for (int i = 0; i < dice.length; i++) {
-            if (dice[i].getFaceUp().equals(DiceFace.FaceType.SHIELD)) {
+            if (dice[i].getFaceUp().getFaceType().equals(DiceFace.FaceType.SHIELD)) {
                 shieldValue += 1;
             }
         }
@@ -180,7 +180,7 @@ public class Player {
     public int getHealScore() {
         int healValue = 0;
         for (int i = 0; i < dice.length; i++) {
-            if (dice[i].getFaceUp().equals(DiceFace.FaceType.HEAL)) {
+            if (dice[i].getFaceUp().getFaceType().equals(DiceFace.FaceType.HEAL)) {
                 healValue += 1;
             }
         }
@@ -198,12 +198,11 @@ public class Player {
     public String toString() {
         String output =  "Health: ";
         output += health + newLine;
-        for (int i = 0; i < dice.length; i++) {
-            output += dice[i].getFaceUp();
-            if (i != dice.length) {
-                output += newLine;
-            }
+        output += "{ ";
+        for (int i = 0; i < dice.length - 1; i++) {
+            output += dice[i].getFaceUp() + ", ";
         }
+        output += dice[dice.length - 1].getFaceUp() + " }" + newLine;
         output += "Attack: " + getAttackScore() + newLine;
         output += "Defense: " + getDefenseScore() + newLine;
         output += "Healing: " + getHealScore() + newLine;

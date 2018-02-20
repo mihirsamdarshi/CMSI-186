@@ -6,10 +6,12 @@ public class SliceNDice {
     public static final int DEFAULT_NUMBER_OF_RISKY_DICE = 1;
     static String newLine = System.getProperty("line.separator");
     private static Player[] player = new Player[2];
+    static int roundNumber = 1;
 
-    public static String standardGame() {
-        int roundNumber = 1;
-        while(player[0].getHealth() > 0 || player[1].getHealth() > 0 || roundNumber == 50) {
+    public static void standardGame() {
+        boolean isGameOverTrue = true;
+
+        while(isGameOverTrue) {
 
             int playerOneHealth = player[0].getHealth();
             int playerTwoHealth = player[1].getHealth();
@@ -17,8 +19,8 @@ public class SliceNDice {
             player[0].rollAllDice();
             player[1].rollAllDice();
 
-            System.out.println("***" + "Round" + roundNumber + "***" + newLine + newLine);
-            System.out.println("Player One" + newLine + "-----------" + player[0].toString());
+            System.out.println("***" + "Round " + roundNumber + "***" + newLine);
+            System.out.println("Player One" + newLine + "-----------" + newLine + player[0].toString());
             System.out.println("Player Two" + newLine + "-----------" + newLine + player[1].toString());
 
             int playerOneAttackScore = player[0].getAttackScore();
@@ -28,22 +30,38 @@ public class SliceNDice {
             int playerTwoDefenseScore = player[1].getDefenseScore();
             int playerTwoHealScore = player[1].getHealScore();
 
-            int playerOneDamageDealt = playerOneAttackScore - playerOneDefenseScore - playerOneHealScore;
-            int playerTwoDamageDealt = playerTwoAttackScore - playerTwoDefenseScore - playerTwoHealScore;
+            if (playerOneDefenseScore > playerTwoAttackScore) {
+                playerTwoAttackScore = 0;
+                playerOneDefenseScore = 0;
+            }
+            if (playerTwoDefenseScore > playerOneAttackScore) {
+                playerOneAttackScore = 0;
+                playerTwoDefenseScore = 0;
+            }
+
+            int playerOneDamageDealt = playerTwoAttackScore - playerOneDefenseScore - playerOneHealScore;
+            int playerTwoDamageDealt = playerOneAttackScore - playerTwoDefenseScore - playerTwoHealScore;
 
             player[0].setHealth(playerOneHealth - playerOneDamageDealt);
             player[1].setHealth(playerTwoHealth - playerTwoDamageDealt);
-            roundNumber++;
-        }
 
-        if (player[0].getHealth() > player[1].getHealth()) {
-            return "###### GAME OVER ######" + newLine + "Player 1 wins " + player[0].getHealth() + "to " + player[1].getHealth();
-        }
-        else if (player[1].getHealth() > player[0].getHealth()) {
-            return "###### GAME OVER ######" + newLine + "Player 2 wins " + player[1].getHealth() + "to " + player[0].getHealth();
-        }
-        else {
-            return "###### GAME OVER ######" + newLine + "It's a tie!";
+            System.out.println("Player 1 takes " + (playerTwoAttackScore - playerOneDefenseScore) + " damage and heals " + playerOneHealScore + "!");
+            System.out.println("Player 2 takes " + (playerOneAttackScore - playerTwoDefenseScore) + " damage and heals " + playerTwoHealScore + "!");
+            System.out.println("Player 1: " + playerOneHealth + "    " + "Player 2: " + playerTwoHealth + newLine);
+
+            roundNumber++;
+            if (player[0].getHealth() <= 0 || player[1].getHealth() <= 0 || roundNumber > 25) {
+                isGameOverTrue = false;
+                if (player[0].getHealth() > player[1].getHealth()) {
+                    System.out.println("###### GAME OVER ######" + newLine + "Player 1 wins " + player[0].getHealth() + " to " + player[1].getHealth());
+                }
+                else if (player[1].getHealth() > player[0].getHealth()) {
+                    System.out.println("###### GAME OVER ######" + newLine + "Player 2 wins " + player[1].getHealth() + " to " + player[0].getHealth());
+                }
+                else {
+                    System.out.println("###### GAME OVER ######" + newLine + "It's a tie!");
+                }
+            }
         }
     }
 
@@ -62,6 +80,7 @@ public class SliceNDice {
                     int numberOfRiskyDiceP2 = DEFAULT_NUMBER_OF_RISKY_DICE;
                     player[0] = new Player(50, numberOfDice, numberOfRiskyDiceP1);
                     player[1] = new Player(50, numberOfDice, numberOfRiskyDiceP2);
+                    standardGame();
             } catch (Exception e) {
                 System.out.println("Please input valid numerical arguments, or to start a standard game, none at all");
             }
@@ -72,6 +91,7 @@ public class SliceNDice {
                     int numberOfRiskyDiceP2 = Integer.parseInt(args[1]);
                     player[0] = new Player(50, numberOfDice, numberOfRiskyDiceP1);
                     player[1] = new Player(50, numberOfDice, numberOfRiskyDiceP2);
+                    standardGame();
             } catch (Exception e) {
                 System.out.println("Please input numerical valid arguments, or to start a standard game, none at all");
             }
@@ -82,6 +102,7 @@ public class SliceNDice {
                     int numberOfRiskyDiceP2 = Integer.parseInt(args[2]);
                     player[0] = new Player(50, numberOfDice, numberOfRiskyDiceP1);
                     player[1] = new Player(50, numberOfDice, numberOfRiskyDiceP2);
+                    standardGame();
             } catch (Exception e) {
                 System.out.println("Please input numerical valid arguments, or to start a standard game, none at all");
             }

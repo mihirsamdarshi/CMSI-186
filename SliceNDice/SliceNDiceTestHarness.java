@@ -942,14 +942,23 @@ public class SliceNDiceTestHarness {
     }
 
     private static void test_PlayerConstructor() {
-        System.out.println("Testing Player constructors...");
+        System.out.println("Testing Player...");
 
         int initialSuccesses = successes;
         int initialAttempts = attempts;
 
         try {
             Player testPlayer = new Player(50, 8, 1);
-            System.out.println(testPlayer.getDieAtIndex(1));
+            displaySuccessIfTrue(
+                    testPlayer.getHealth() == 50);
+        } catch (UnsupportedOperationException uoe) {
+            displayUnimplementedMethodFailure();
+        } catch (Exception e) {
+            displaySuccessIfTrue(false);
+        }
+
+        try {
+            Player testPlayer = new Player(50, 8, 1);
             displaySuccessIfTrue(
                     testPlayer.getHealth() == 50);
         } catch (UnsupportedOperationException uoe) {
@@ -967,6 +976,18 @@ public class SliceNDiceTestHarness {
         } catch (Exception e) {
             displaySuccessIfTrue(false);
         }
+        try {
+            Player testPlayer = new Player(50, 9, 8);
+            testPlayer.rollAllDice();
+            displaySuccessIfTrue(
+                    testPlayer.countOfFaceType(DiceFace.FaceType.SWORD) != 17);
+            System.out.println("The above test may fail on occasions");
+        } catch (UnsupportedOperationException uoe) {
+            displayUnimplementedMethodFailure();
+        } catch (Exception e) {
+            displaySuccessIfTrue(false);
+        }
+
 
         System.out.println("Player Constructors: " + (successes - initialSuccesses) + "/" + (attempts - initialAttempts) + " passed");
     }
