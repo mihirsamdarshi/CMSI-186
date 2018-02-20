@@ -15,6 +15,7 @@ public class SliceNDiceTestHarness {
     private static int successes = 0;
 
     public static final long ROLL_TEST_COUNT = 10000;
+    static String newLine = System.getProperty("line.separator");
 
     public static void main(String[] args) {
         attempts = 0;
@@ -968,10 +969,10 @@ public class SliceNDiceTestHarness {
         }
 
         try {
-            Player testPlayer = new Player(50, 9 , 8);
-            System.out.println(testPlayer.getDefenseScore());
+            Player testPlayer = new Player(50, 1000 , 500);
+            testPlayer.rollAllDice();
             displaySuccessIfTrue(
-                    testPlayer.getDefenseScore() == 0);
+                    testPlayer.getDefenseScore() > 1);
         } catch (UnsupportedOperationException uoe) {
             displayUnimplementedMethodFailure();
         } catch (Exception e) {
@@ -979,10 +980,10 @@ public class SliceNDiceTestHarness {
         }
 
         try {
-            Player testPlayer = new Player(50, 9 , 8);
-            System.out.println(testPlayer.getHealScore());
+            Player testPlayer = new Player(50, 1000 , 500);
+            testPlayer.rollAllDice();
             displaySuccessIfTrue(
-                    testPlayer.getHealScore() == 0);
+                    testPlayer.getHealScore() > 1);
         } catch (UnsupportedOperationException uoe) {
             displayUnimplementedMethodFailure();
         } catch (Exception e) {
@@ -1011,7 +1012,38 @@ public class SliceNDiceTestHarness {
             displaySuccessIfTrue(false);
         }
 
+        try {
+            Player testPlayer = new Player(50, 9, 8);
+            System.out.println(testPlayer.toString());
+            displaySuccessIfTrue(
+                    testPlayer.toString().equals(
+                    "Health: 50" + newLine + "{ Sword 2, Sword 2, Sword 2, Sword 2, Sword 2, Sword 2, Sword 2, Sword 2, Sword 1 }" + newLine + "Attack: 17" + newLine + "Defense: 0" + newLine + "Healing: 0"));
+        } catch (UnsupportedOperationException uoe) {
+            displayUnimplementedMethodFailure();
+        } catch (Exception e) {
+            displaySuccessIfTrue(false);
+        }
+
 
         System.out.println("Player Constructors: " + (successes - initialSuccesses) + "/" + (attempts - initialAttempts) + " passed");
+    }
+
+    private static void test_SliceNDice() {
+        System.out.println("Testing SliceNDice...");
+
+        int initialSuccesses = successes;
+        int initialAttempts = attempts;
+
+        try {
+            Player testPlayer = new Player(50, 9, 8);
+            displaySuccessIfTrue(
+                //TODO: figure out how to call standardGame and main methods
+                testPlayer.countOfFaceType(DiceFace.FaceType.SWORD) == 17);
+        } catch (UnsupportedOperationException uoe) {
+            displayUnimplementedMethodFailure();
+        } catch (Exception e) {
+            displaySuccessIfTrue(false);
+        }
+        System.out.println("SliceNDice: " + (successes - initialSuccesses) + "/" + (attempts - initialAttempts) + " passed");
     }
 }
