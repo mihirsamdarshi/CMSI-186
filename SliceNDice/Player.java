@@ -13,6 +13,7 @@ public class Player {
     public static final int DEFAULT_STARTING_HEALTH = 50;
     private int health;
     private CombatDie[] dice;
+    static String newLine = System.getProperty("line.separator");
 
     /**
      * Constructs a Player with the given health and an array of dice of the
@@ -195,17 +196,17 @@ public class Player {
      */
     @Override
     public String toString() {
-        String output =  "Player: ";
-        output += health + ", ";
+        String output =  "Health: ";
+        output += health + newLine;
         for (int i = 0; i < dice.length; i++) {
             output += dice[i].getFaceUp();
             if (i != dice.length) {
-                output += ", ";
+                output += newLine;
             }
         }
-        output += getAttackScore() + ", ";
-        output += getDefenseScore() + ", ";
-        output += getHealScore();
+        output += "Attack: " + getAttackScore() + newLine;
+        output += "Defense: " + getDefenseScore() + newLine;
+        output += "Healing: " + getHealScore() + newLine;
         return output;
     }
 }
