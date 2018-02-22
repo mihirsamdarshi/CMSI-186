@@ -31,9 +31,42 @@ public class ClockSolverTestHarness {
         int initialAttempts = attempts;
 
         try {
-            Clock testClock = new Clock(76.6);
+            Clock testClock = new Clock(76.125);
+            testClock.tick();
             System.out.println(testClock.getSecondsPassed());
-            displaySuccessIfTrue(testClock.getSecondsPassed() == 16.6);
+            displaySuccessIfTrue(testClock.getSecondsPassed() == 16.125);
+        } catch (UnsupportedOperationException uoe) {
+            displayUnimplementedMethodFailure();
+        } catch (Exception e) {
+            displaySuccessIfTrue(false);
+        }
+
+        try {
+            Clock testClock = new Clock(126.5);
+            testClock.tick();
+            System.out.println(testClock.getSecondsPassed());
+            displaySuccessIfTrue(testClock.getSecondsPassed() == 6.5);
+        } catch (UnsupportedOperationException uoe) {
+            displayUnimplementedMethodFailure();
+        } catch (Exception e) {
+            displaySuccessIfTrue(false);
+        }
+
+        try {
+            Clock testClock = new Clock(126.125);
+            testClock.tick();
+            displaySuccessIfTrue(testClock.getMinutesPassed() == 2);
+        } catch (UnsupportedOperationException uoe) {
+            displayUnimplementedMethodFailure();
+        } catch (Exception e) {
+            displaySuccessIfTrue(false);
+        }
+
+        try {
+            Clock testClock = new Clock(90000);
+            testClock.tick();
+            System.out.println(testClock.getHoursPassed());
+            displaySuccessIfTrue(testClock.getHoursPassed() == 16.125);
         } catch (UnsupportedOperationException uoe) {
             displayUnimplementedMethodFailure();
         } catch (Exception e) {

@@ -36,6 +36,7 @@ public class Clock {
      */
     public int getHoursPassed() {
         int hours = (int)timeElapsed / 3600;
+        Math.floor(hours);
         return hours;
     }
 
