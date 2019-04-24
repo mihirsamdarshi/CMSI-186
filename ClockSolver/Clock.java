@@ -23,7 +23,7 @@ public class Clock {
         timeElapsed = 0;
         timeSlice = timeslice;
         if (timeslice <= 0 || timeslice > 1800) {
-            throw new UnsupportedOperationException();
+            throw new IllegalArgumentException();
         }
     }
 
@@ -36,7 +36,6 @@ public class Clock {
      */
     public int getHoursPassed() {
         int hours = (int)timeElapsed / 3600;
-        Math.floor(hours);
         return hours;
     }
 
@@ -48,8 +47,8 @@ public class Clock {
      * @return the number of minutes simulated
      */
     public int getMinutesPassed() {
-        int minutes = ((int)timeElapsed % 3600) / 60;
-        return minutes;
+        double minutes = (int)(timeElapsed % 3600) / 60;
+        return (int)minutes;
     }
 
     /**
@@ -81,6 +80,10 @@ public class Clock {
         timeElapsed += timeSlice;
     }
 
+    public double getTimeElapsed() {
+         return this.timeElapsed;
+    }
+
     /**
      * Returns a String representation of the Clock, showing the time passed in
      * military time and hh:mm:ss.s format.
@@ -88,6 +91,20 @@ public class Clock {
      * @return a String representation of the Clock
      */
     public String toString() {
-        return "tru chainz";
+        String output = "";
+        output += getHoursPassed() + ":";
+        if (getMinutesPassed() < 10) {
+            output+= "0" + getMinutesPassed() + ":";
+        }
+        else {
+            output+= getMinutesPassed() + ":";
+        }
+        if (getSecondsPassed() < 10) {
+            output+= "0" + getSecondsPassed();
+        }
+        else {
+            output+= getSecondsPassed();
+        }
+        return output;
     }
 }

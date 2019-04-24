@@ -451,6 +451,7 @@ public static void test_longformDate() {
 
         try {
                 displaySuccessIfTrue( DateDistance.longformDate(4, 23, 1986).equals("Wednesday, April 23, 1986") );
+                System.out.println(DateDistance.longformDate(4, 23, 1986));
         } catch(Exception e) {
                 displaySuccessIfTrue(false);
         }
